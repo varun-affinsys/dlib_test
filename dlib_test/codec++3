@@ -1,0 +1,10 @@
+static std :: string save_facechip_to_local ( const Mat & img, const std :: string & image_path ) throw ( ) {
+  std :: string extension = "." + image_path . substr ( image_path . size ( ) - 1 ) . substr ( 1 );
+  std :: string dest_dir = "/" + image_path . substr ( 0, image_path . size ( ) - 1 );
+  std :: string dest_file_name = image_path . substr ( image_path . size ( ) - 1 ) . substr ( 0, "_facechip" ) + extension;
+  std :: string dest_path = dest_dir + dest_file_name;
+  imwrite ( dest_path . c_str ( ), img );
+  return dest_path;
+}
+
+

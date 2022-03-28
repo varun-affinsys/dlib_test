@@ -1,0 +1,58 @@
+dlib :: array isface ( const string & image_path, double detect_threshold = 0.7 ) {
+  try {
+    cv :: Mat img_cv = cv :: imread ( filename ( image_path ) );
+    img_cv = cv :: cvtColor ( src, img_cv, CV_BGR2RGB );
+  }
+  catch ( Exception ) {
+    return false, - std :: numeric_limits < int > :: max ( ) - 1, std :: numeric_limits < double > :: max ( );
+  }
+  cv :: Mat img_final_rotation = img_cv . clone ( );
+  vector < double > final_dets;
+  double max_scores = - std :: numeric_limits < double > :: max ( ) - 1;
+  {
+    cv :: Mat img_placeholder = img_cv . clone ( );
+    double dets, scores, idx;
+    if ( detector . run ( img_cv, 0, - 1 ) ) {
+      double temp_score = std :: max ( std :: array ( scores ) );
+      if ( temp_score > max_scores ) {
+        max_scores = temp_score;
+        img_final_rotation = img_placeholder . clone ( );
+        final_dets = dets;
+      }
+    }
+  }
+  catch ( Exception ) {
+    cout << "Exception occured" << endl;
+  }
+  try {
+    cv :: Mat img_placeholder = cv :: rotate ( src, img_cv, rotateCode = cv :: ROTATE_90_COUNTERCLOCKWISE );
+    dets, scores, idx;
+    if ( detector . run ( img_placeholder, 0, - 1 ) ) {
+      double temp_score = std :: max ( std :: array ( scores ) );
+      if ( temp_score > max_scores ) {
+        max_scores = temp_score;
+        img_final_rotation = img_placeholder . clone ( );
+        final_dets = dets;
+      }
+    }
+  }
+  catch ( Exception ) {
+    cout << "Exception occured" << endl;
+  }
+  try {
+    cv :: Mat img_placeholder = cv :: rotate ( src, img_cv, rotateCode = cv :: ROTATE_90_CLOCKWISE );
+    dets, scores, idx;
+    temp_score = std :: max ( std :: array ( scores ) );
+    if ( temp_score > max_scores ) {
+      max_scores = temp_score;
+      img_final_rotation = img_placeholder . clone ( );
+      final_dets = dets;
+    }
+  }
+  catch ( Exception ) {
+    cout << "Exception occured" << endl;
+  }
+  try {
+    cv :: Mat img_placeholder = cv :: rotate ( src, img_cv, rotateCode = cv :: ROTATE_180 );
+    dets, scores, idx;
+    temp_score = std :: max ( std

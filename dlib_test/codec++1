@@ -1,0 +1,79 @@
+#include <dlib/image_processing/frontal_face_detector.h>
+#include <dlib/gui_widgets.h>
+#include <dlib/image_io.h>
+#include <opencv2/core.hpp>
+#include <opencv2/imgcodecs.hpp>
+#include <opencv2/highgui.hpp>
+#include <iostream>
+
+using namespace dlib;
+using namespace cv;
+using namespace std;
+
+bool isface ( const ech_face & self, const std :: string & image_path, const double detect_threshold = 0.7 ) {
+  dlib :: array < double, 2 > img_cv;
+  
+  try 
+  {
+    Mat cv :: imread ( filename, img_cv );
+    img_cv = cv :: cvtColor ( src, img_cv, CV_BGR2RGB );
+  }
+  
+  catch ( Exception ) 
+  {
+    return false, - std :: numeric_limits < int > :: max ( ) - 1, std :: numeric_limits < double > :: max ( );
+  }
+  
+  cv :: Mat img_final_rotation = img_cv . clone ( );
+  vector < double > final_dets;
+  double max_scores = - std :: numeric_limits < double > :: max ( ) - 1;
+  {
+    cv :: Mat img_placeholder = img_cv . clone ( );
+    double dets, scores, idx;
+    if ( self . detector -> run ( img_cv, 0, - 1 ) ) {
+      double temp_score = std :: max ( std :: array < double, 2 > ( scores ) );
+      if ( temp_score > max_scores ) {
+        max_scores = temp_score;
+        img_final_rotation = img_placeholder . clone ( );
+        final_dets = dets;
+      }
+    }
+  }
+  
+  catch ( Exception ) 
+  {
+    try 
+    {
+      cv :: Mat img_placeholder = cv :: rotate ( src, img_cv, rotateCode = cv :: ROTATE_90_COUNTERCLOCKWISE );
+      dets, scores, idx;
+      if ( self . detector -> run ( img_placeholder, 0, - 1 ) ) {
+        double temp_score = std :: max ( std :: array < double, 2 > ( scores ) );
+        if ( temp_score > max_scores ) {
+          max_scores = temp_score;
+          img_final_rotation = img_placeholder . clone ( );
+          final_dets = dets;
+        }
+      }
+    }
+    catch ( Exception ) 
+    {
+      try 
+      {
+        cv :: Mat img_placeholder = cv :: rotate ( src, img_cv, rotateCode = cv :: ROTATE_90_CLOCKWISE );
+        dets, scores, idx;
+        temp_score = std :: max ( std :: array < double, 2 > ( scores ) );
+        if ( temp_score > max_scores ) {
+          max_scores = temp_score;
+          img_final_rotation = img_placeholder . clone ( );
+          final_dets = dets;
+        }
+      }
+      catch ( Exception ) 
+      {
+      // REQUIRE EXCEPTION TO BE CALLED
+      }
+    }
+    return false, face_face_to_array ( self . face_face ) . tolist ( ), face_face_to_array ( self . face_face ) . tolist ( );
+  }
+  return false;
+}
